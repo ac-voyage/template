@@ -1,4 +1,5 @@
 /* I/O Plug-in, by Abreto <m@abreto.net>. */
+#include <stdio.h>
 
 #define ISDIGIT(x) ((x>='0')&&(x<='9'))
 void readn(int *n)
