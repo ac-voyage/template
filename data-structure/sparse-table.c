@@ -6,7 +6,7 @@ int min(int a, int b)
 }
 
 #define MAXN    100001
-#define MAXLOG  31
+#define MAXLOG  32
 
 int N;
 int A[MAXN];    /* indexed from 0. */
