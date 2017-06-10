@@ -48,20 +48,7 @@ void build(int o, int l, int r) /* [l,r] */
         build(o<<1|1, mid+1, r);
         maintain(o);
     }
-}
-
-/* Set A[p]=v. Usage: modify(p, v, 1, 1, n); */
-void modify(int p, int v, int o, int l, int r)
-{
-    if( r - l < 2 )
-    {
-        maintain_leaf(o, v);
-    } else {
-        int mid = (l+r)/2;
-        if( p <= mid ) modify(p, v, o*2, l, mid);
-        else modify(p, v, o*2+1, mid, r);
-        maintain(o);
-    }
+    marks[o].marked = 0;
 }
 
 /* Modify all elements in [l,r] */
@@ -79,5 +66,36 @@ void pushdown(int o)
         mark(marks[o], o<<1);
         mark(marks[o], o<<1|1);
         marks[o].marked = 0;
+    }
+}
+
+/* **DISCARDED** */
+/* Set A[p]=v. Usage: modify(p, v, 1, 1, n);
+void modify(int p, int v, int o, int l, int r)
+{
+    if( r - l < 2 )
+    {
+        maintain_leaf(o, v);
+    } else {
+        int mid = (l+r)/2;
+        pushdown(o);
+        if( p <= mid ) modify(p, v, o*2, l, mid);
+        else modify(p, v, o*2+1, mid, r);
+        maintain(o);
+    }
+}*/
+
+/* Do act on all elements in [L,R] */
+void update(int L, int R, lazy_t act, int o, int l, int r)
+{
+    if( L <= l && r <= R )
+    {
+        mark(act, o);
+    } else {
+        int mid = (l+r)>>1;
+        pushdown(o);
+        if( L <= mid ) update(L, R, act, o<<1, l, mid);
+        if( R > mid ) update(L, R, act, o<<1|1, mid+1, r);
+        maintain(o);
     }
 }
