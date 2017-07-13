@@ -6,35 +6,20 @@
 using namespace std;
 
 #define EPS (1e-8)
+bool fe(double a, double b){return ((a-b>=-EPS)&&(a-b<=EPS));}
+bool fl(double a, double b){return (a-b<-EPS);}
+bool fle(double a, double b){return (a-b<=EPS);}
 
-bool fless(double a, double b)
+typedef double T;
+struct point
 {
-    return ((a-b) < -EPS);
-}
-
-struct point_t
-{
-    int x, y;
-
-    point_t(void):x(0),y(0){}
-    point_t(int xx, int yy):x(xx),y(yy){}
-
-    friend point_t operator-(point_t a, point_t b)
-    {
-        return point_t(a.x-b.x, a.y-b.y);
-    }
+    T x, y;
+    point():x(0),y(0){}
+    point(T xx, T yy):x(xx),y(yy){}
+    T mag2(void){return (x*x+y*y);}
+    T det(point b){return (x*b.y-y*b.x);}
+    friend point operator-(point a, point b){return point(a.x-b.x, a.y-b.y);}
+    friend bool operator==(point a, point b){return fe(a.x,b.x)&&fe(a.y,b.y);}
 };
-typedef point_t vector_t;
 
-/* a x b */
-int det(vector_t a, vector_t b)
-{
-    return a.x * b.y - a.y * b.x;
-}
-
-double mag(vector_t a)
-{
-    return sqrt((double)a.x*a.x+a.y*(double)a.y);
-}
-
-typedef vector<point_t> vp;
+typedef vector< point > vp;
