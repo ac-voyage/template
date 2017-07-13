@@ -5,13 +5,13 @@
 
 using namespace std;
 
-point_t O;
+point O;
 
 bool comp_angle(point_t a, point_t b)
 {
-    int t = det(a-O, b-O);
-    if(0 == t) return fless(mag(a-O),mag(b-O));
-    else return (t>0);
+    int t = (a-O).det(b-O);
+    if(fe(t,0.0)) return fl((b-O).mag2(),(a-O).mag2());
+    else return fl(0.0,t);
 }
 
 void convex_hull_graham(vp& convex, vp src)
@@ -25,20 +25,11 @@ void convex_hull_graham(vp& convex, vp src)
     convex.push_back(src[0]); convex.push_back(src[1]);
     top = 1;
     for(i = 2;i < src.size();++i)
-        while(1)
+    {
+        while(top>1 && fle((convex[top]-convex[top-1]).det(src[i]-convex[top]),0.0))
         {
-            if(top < 1)
-            {
-                convex.push_back(src[i]); top++;
-                break;
-            } else {
-                if(det(convex[top]-convex[top-1], src[i]-convex[top]) > 0)
-                {
-                    convex.push_back(src[i]); top++;
-                    break;
-                } else {
-                    convex.pop_back(); top--;
-                }
-            }
+            convex.pop_back(); --top;
         }
+        convex.push_back(src[i]); ++top;
+    }
 }
