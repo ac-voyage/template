@@ -9,7 +9,7 @@ point O;
 
 bool comp_angle(point_t a, point_t b)
 {
-    int t = (a-O).det(b-O);
+    double t = (a-O).X(b-O);
     if(fe(t,0.0)) return fl((b-O).mag2(),(a-O).mag2());
     else return fl(0.0,t);
 }
@@ -26,7 +26,7 @@ void convex_hull_graham(vp& convex, vp src)
     top = 1;
     for(i = 2;i < src.size();++i)
     {
-        while(top>1 && fle((convex[top]-convex[top-1]).det(src[i]-convex[top]),0.0))
+        while(top>1 && fle((convex[top]-convex[top-1]).X(src[i]-convex[top]),0.0))
         {
             convex.pop_back(); --top;
         }

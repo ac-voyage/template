@@ -17,7 +17,7 @@ struct point
     point():x(0),y(0){}
     point(T xx, T yy):x(xx),y(yy){}
     T mag2(void){return (x*x+y*y);}
-    T det(point b){return (x*b.y-y*b.x);}
+    T X(point b){return (x*b.y-y*b.x);}
     T& operator[](int i){if(0==i)return x;else return y;}
     friend point operator+(point a, point b){return point(a.x+b.x, a.y+b.y);}
     friend point operator-(point a, point b){return point(a.x-b.x, a.y-b.y);}
