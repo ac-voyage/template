@@ -9,7 +9,7 @@ point O;
 
 bool comp_angle(point_t a, point_t b)
 {
-    int t = (a-O).X(b-O);
+    double t = (a-O).X(b-O);
     if(fe(t,0.0)) return fl((b-O).mag2(),(a-O).mag2());
     else return fl(0.0,t);
 }
