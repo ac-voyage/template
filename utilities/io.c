@@ -1,6 +1,18 @@
 /* I/O Plug-in, by Abreto <m@abreto.net>. */
 #include <stdio.h>
 
+#if ( _WIN32 || __WIN32__ || _WIN64 || __WIN64__ )
+#define INT64 "%I64d"
+#else
+#define INT64 "%lld"
+#endif
+
+#if ( _WIN32 || __WIN32__ || _WIN64 || __WIN64__ )
+#define UNS64 "%I64u"
+#else
+#define UNS64 "%llu"
+#endif
+
 #define ISDIGIT(x) ((x>='0')&&(x<='9'))
 void readn(int *n)
 {
