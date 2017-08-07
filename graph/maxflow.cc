@@ -39,7 +39,7 @@ struct graph
             for(i = s;i != t;i = path[i])
             {
                 grant_e(i, path[i], -minf);
-                grant_e(i, path[i], minf);
+                grant_e(path[i], i, minf);
             }
             flow += minf;
         }
