@@ -91,7 +91,7 @@ void update(int L, int R, lazy_t act, int o, int l, int r)
     if( L <= l && r <= R )
     {
         mark(act, o);
-    } else {
+    } else if (L <= R) {
         int mid = (l+r)>>1;
         pushdown(o);
         if( L <= mid ) update(L, R, act, o<<1, l, mid);
