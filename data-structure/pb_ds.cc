@@ -1,4 +1,4 @@
-/* Red-Black tree via pd_ds. */
+/* Red-Black tree via pb_ds. */
 #include<bits/stdc++.h>
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
