@@ -68,7 +68,7 @@ namespace SuffixArray
 	{
 		N = strlen(S);
 		REP(i, N) sa[i] = i, pos[i] = S[i];
-		for (gap = 1;; gap *= 2)
+		for (gap = 1;; gap <<= 1)
 		{
 			sort(sa, sa + N, sufCmp);
 			REP(i, N - 1) tmp[i + 1] = tmp[i] + sufCmp(sa[i], sa[i + 1]);
