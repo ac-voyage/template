@@ -137,7 +137,7 @@ namespace HashSuffixArray
 namespace lrj_sa
 {
 	const int MAXN = 1000;
-	char s[MAXN];	/* 原始字符数组（如果最后一个字符s[n-1]是0，则sa[0]一定为n-1） */
+	char s[MAXN];	/* 原始字符数组（最后一个字符应必须是0，而前面的字符必须非0） */
 	int sa[MAXN], t[MAXN], t2[MAXN], c[MAXN], n;	/* n seems to be the length of s. */
 	/* every charactor is in [0,m-1] */
 	void build_sa(int m)
