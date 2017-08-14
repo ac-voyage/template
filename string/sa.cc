@@ -159,7 +159,7 @@ namespace lrj_sa
 			swap(x,y);
 			p = 1; x[sa[0]] = 0;
 			for(i = 1;i < n;++i)
-				x[sa[i]] = y[sa[i-1]]==y[sa[i]] && y[sa[[i-1]+k]]==y[sa[i]+k] ? p-1:p++;
+				x[sa[i]] = y[sa[i-1]]==y[sa[i]] && y[sa[i-1]+k]==y[sa[i]+k] ? p-1:p++;
 			if(p >= n) break;
 			m = p;
 		}
