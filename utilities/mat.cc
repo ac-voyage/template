@@ -1,5 +1,6 @@
 
-template <class T, int maxn> /* template <class T=int/ll, int maxn, ll mod> */
+typedef long long int ll;
+template <class T, int maxn, ll mod> /* template <class T=int/ll, int maxn, ll mod> */
 struct mat
 {
     int N;
@@ -19,7 +20,7 @@ struct mat
         mat ret(N);
         for(int i = 1;i <= N;++i)
             for(int j = 1;j <= N;++j)
-                ret.a[i][j] = -a[i][j]; /* +mod) % mod */
+                ret.a[i][j] = (mod-a[i][j])%mod;
         return ret;
     }
     mat operator+(const mat &b) const
@@ -27,7 +28,7 @@ struct mat
         mat ret(N);
         for(int i = 1;i <= N;++i)
             for(int j = 1;j <= N;++j)
-                ret.a[i][j] = a[i][j] + b.a[i][j];  /* % mod */
+                ret.a[i][j] = (a[i][j] + b.a[i][j])%mod;
         return ret;
     }
     mat operator-(const mat &b) const
@@ -35,7 +36,7 @@ struct mat
         mat ret(N);
         for(int i = 1;i <= N;++i)
             for(int j = 1;j <= N;++j)
-                ret.a[i][j] = a[i][j] - b.a[i][j];  /* +mod) % mod */
+                ret.a[i][j] = (a[i][j] - b.a[i][j] + mod) % mod;
         return ret;
     }
     mat operator*(const mat &b) const
@@ -44,7 +45,10 @@ struct mat
         for(int i = 1;i <= N;++i)
             for(int j = 1;j <= N;++j)
                 for(int k = 1;k <= N;++k)
-                    ret.a[i][j] += a[i][k] * b.a[k][j]; /* % mod */
+                {
+                    /* T t = (a[i][k] * b.a[k][j]) % mod; // delete %mod if get TLE. */
+                    ret.a[i][j] = (ret.a[i][j] + a[i][k] * b.a[k][j]) % mod; /* seprate this line if get WA. */
+                }
         return ret;
     }
     mat operator^(long long int p) const
