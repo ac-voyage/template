@@ -1,5 +1,8 @@
 /* Max Flow Problem, by Abreto<m@abreto.net> */
 
+#include <bits/stdc++.h>
+using namespace std;
+
 #define MAXV    (100000)
 #define MAXE    (1000000)
 struct edge
@@ -161,3 +164,115 @@ struct Dinic
 };
 
 /* ISAP */
+struct Edge{  
+    int from,to,cap,flow;  
+};  
+const int maxn=650;  
+const int INF=0x3f3f3f3f;  
+struct ISAP{  
+    int n,m,s,t;//结点数，边数（包括反向弧），源点编号，汇点编号  
+    vector<Edge>edges;  
+    vector<int>G[maxn];  
+    bool vis[maxn];  
+    int d[maxn];  
+    int cur[maxn];  
+    int p[maxn];  
+    int num[maxn];  
+    void AddEdge(int from,int to,int cap){  
+        edges.push_back((Edge){from,to,cap,0});  
+        edges.push_back((Edge){to,from,0,0});  
+        m=edges.size();  
+        G[from].push_back(m-2);  
+        G[to].push_back(m-1);  
+    }  
+    bool RevBFS(){  
+        memset(vis,0,sizeof(vis));  
+        queue<int>Q;  
+        Q.push(t);  
+        d[t]=0;  
+        vis[t]=1;  
+        while(!Q.empty()){  
+            int x=Q.front();Q.pop();  
+            for(int i=0;i<G[x].size();i++){  
+                Edge &e =edges[G[x][i]^1];  
+                if(!vis[e.from]&&e.cap>e.flow){  
+                    vis[e.from]=1;  
+                    d[e.from]=d[x]+1;  
+                    Q.push(e.from);  
+                }  
+            }  
+        }  
+        return vis[s];  
+    }  
+    int Augment(){  
+        int x=t, a=INF;  
+        while(x!=s){  
+            Edge &e = edges[p[x]];  
+            a= min(a,e.cap-e.flow);  
+            x=edges[p[x]].from;  
+        }  
+        x=t;  
+        while(x!=s){  
+            edges[p[x]].flow+=a;  
+            edges[p[x]^1].flow-=a;  
+            x=edges[p[x]].from;  
+        }  
+        return a;  
+    }  
+    int Maxflow(int s,int t,int n){  
+        this->s=s,this->t=t,this->n=n;  
+        int flow=0;  
+        RevBFS();  
+        memset(num,0,sizeof(num));  
+        for(int i=0;i<n;i++){  
+            num[d[i]]++;  
+        }  
+        int x=s;  
+        memset(cur,0,sizeof(cur));  
+        while(d[s]<n){  
+            if(x==t){  
+                flow+=Augment();  
+                x=s;  
+            }  
+            int ok=0;  
+            for(int i=cur[x];i<G[x].size();i++){  
+                Edge &e =edges[G[x][i]];  
+                if(e.cap>e.flow&&d[x]==d[e.to]+1){  
+                    ok=1;  
+                    p[e.to]=G[x][i];  
+                    cur[x]=i;  
+                    x=e.to;  
+                    break;  
+                }  
+            }  
+            if(!ok){  
+                int m=n-1;  
+                for(int i=0;i<G[x].size();i++){  
+                    Edge &e =edges[G[x][i]];  
+                    if(e.cap>e.flow)  
+                        m=min(m,d[e.to]);  
+                }  
+                if(--num[d[x]]==0)  
+                    break;  
+                num[d[x]=m+1]++;  
+                cur[x]=0;  
+                if(x!=s)  
+                    x=edges[p[x]].from;  
+            }  
+        }  
+        return flow;  
+    }  
+};  
+int main(){  
+    int n,m,a,b,c,res;  
+    while(scanf("%d%d",&m,&n)!=EOF){  
+        ISAP tmp;  
+        for(int i=0;i<m;i++){  
+            scanf("%d%d%d",&a,&b,&c);  
+            tmp.AddEdge(a,b,c);  
+        }  
+        res=tmp.Maxflow(1,n,n);  
+        printf("%d\n",res);  
+    }  
+    return 0;  
+}
