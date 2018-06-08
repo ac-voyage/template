@@ -3,43 +3,40 @@
 
 /* !!NEED IMPROVING!! */
 
-#define MAXW    10002
-#define MAXT    1000002
-char W[MAXW];   /* pattern */
-char T[MAXT];
-int pi[MAXW];
+#define MAXL	(1000010)
 
-void compute(void)
+char W[MAXL], T[MAXL];
+int f[MAXL];
+int lW, lT;
+
+int count(void)
 {
-    int i = 0, k = 0;
-    int m = strlen(W+1);
-    pi[1] = 0;
-    for(i = 2;i <= m;i++)
-    {
-        while(k && W[k+1]!=W[i])
-            k = pi[k];
-        if(W[k+1] == W[i])
-            k++;
-        pi[i] = k;
-    }
+	int cnt = 0;
+	int i, j;
+	lW = strlen(W); lT = strlen(T);
+	// -- self-matching
+	f[0] = j = -1;
+	for(i = 1;i < lW;i++)
+	{
+		while( j >= 0 && W[j+1] != W[i] )
+			j = f[j];
+		if( W[j+1] == W[i] ) j++;
+		f[i] = j;
+	}
+	// ---
+	j = -1;
+	for(i = 0;i < lT;i++)
+	{
+		while( j >= 0 && W[j+1] != T[i] )
+			j = f[j];
+		if( W[j+1] == T[i] ) j++;
+		if( j == lW-1 )
+		{
+			cnt++;
+			j = f[j];
+		}
+	}
+	return cnt;
 }
-int kmp(void)
-{
-    int i = 0, q = 0;
-    int ret = 0;
-    int n = strlen(T+1), m = strlen(W+1);
-    compute();
-    for(i = 1;i <= n;++i)
-    {
-        while(q && W[q+1]!=T[i])
-            q = pi[q];
-        if( W[q+1]==T[i])
-            q++;
-        if(q == m)
-        {
-            ret++;
-            q = pi[q];
-        }
-    }
-    return ret;
-}
+
+
