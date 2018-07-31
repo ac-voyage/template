@@ -38,5 +38,3 @@ int count(void)
 	}
 	return cnt;
 }
-
-
