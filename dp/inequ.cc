@@ -4,9 +4,9 @@
  * 如果 dp(i,j) 满足 dp(i,j)<=dp(i,j+1)<=dp(i+1,j+1)
  * 那么决策 s(i,j) 满足 s(i,j)<=s(i,j+1)<=s(i+1,j+1)
  * 可以变形为:
- *      s(i-1,j) <= s(i,j) <= s(i,j+1)  // i增j减 
+ *      s(i-1,j) <= s(i,j) <= s(i,j+1)  // dp方向：i增j减 
  *  或
- *      s(i,j-1) <= s(i,j) <= s(i+1,j)  // 区间长度L增
+ *      s(i,j-1) <= s(i,j) <= s(i+1,j)  // dp方向：区间长度L增
  */
 #include <bits/stdc++.h>
 
